@@ -5,7 +5,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     end
 
   allow do
-    origins "https://steptracking-api.herokuapp.com/"
+    origins "http://steptracking-api.herokuapp.com/"
     resource "*", headers: :any, methods: [:get, :post, :put, :delete, :patch, :options, :head], credentials: true
   end
     
