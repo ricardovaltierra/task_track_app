@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
   def index
     tasks = Task.order('created_at DESC')
-    render json: { status: 'SUCCESS', messages: 'Loaded tasks', data: tasks }, status: :ok
+    render json: { status: 'SUCCESS', messages: 'Loaded tasks', tasks: tasks }, status: :ok
   end
 
   def show
