@@ -1,22 +1,22 @@
 class TasksController < ApplicationController
-
+  include CurrentUserConcern
   def index
-    tasks = Task.order('created_at DESC')
+    tasks = Task.where('user_id': @current_user).order('created_at DESC')
     render json: { status: 'SUCCESS', messages: 'Loaded tasks', tasks: tasks }, status: :ok
   end
 
   def show
     task = Task.find(params[:id])
-    render json: { status: 'SUCCESS', messages: 'Loaded task', data: task }, status: :ok
+    render json: { status: 'SUCCESS', messages: 'Loaded task', task: task }, status: :ok
   end
 
   def create
     task = Task.new(task_params)
 
     if task.save
-      render json: { status: 'SUCCESS', messages: 'Task saved', data: task }, status: :ok
+      render json: { status: 'SUCCESS', messages: 'Task saved', task: task }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Task not saved', data: task.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Task not saved', errors: task.errors }, status: :unprocessable_entity
     end
   end
 
@@ -24,9 +24,9 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
 
     if task.destroy
-      render json: { status: 'SUCCESS', messages: 'Task deleted', data: task }, status: :ok
+      render json: { status: 'SUCCESS', messages: 'Task deleted', task: task }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Task not deleted', data: task.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Task not deleted', errors: task.errors }, status: :unprocessable_entity
     end
   end
 
@@ -34,9 +34,9 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
 
     if task.update_attributes(task_params)
-      render json: { status: 'SUCCESS', messages: 'Task updated', data: task }, status: :ok
+      render json: { status: 'SUCCESS', messages: 'Task updated', task: task }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Task not updated', data: task.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Task not updated', errors: task.errors }, status: :unprocessable_entity
     end
   end
 

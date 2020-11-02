@@ -1,13 +1,13 @@
 class RecordsController < ApplicationController
-  
+  include CurrentUserConcern
   def index
-    records = Record.order('created_at DESC')
-    render json: { status: 'SUCCESS', messages: 'Loaded records', data: records }, status: :ok
+    records = Record.where('user_id': @current_user).order('created_at DESC')
+    render json: { status: 'SUCCESS', messages: 'Loaded records', records: records }, status: :ok
   end
 
   def show
     record = Record.find(params[:id])
-    render json: { status: 'SUCCESS', messages: 'Loaded record', data: record }, status: :ok
+    render json: { status: 'SUCCESS', messages: 'Loaded record', record: record }, status: :ok
   end
 
   def create
@@ -22,19 +22,19 @@ class RecordsController < ApplicationController
           render json: { 
             status: 'SUCCESS', 
             messages: "Record saved. You completed your task with #{new_completion}%!!", 
-            data: record
+            record: record
             }, status: :ok
         else
-          render json: { status: 'SUCCESS', messages: 'Record saved', data: record }, status: :ok
+          render json: { status: 'SUCCESS', messages: 'Record saved', record: record }, status: :ok
         end
       else
-        render json: { status: 'ERROR', messages: 'Record failed', data: record.errors }, status: :unprocessable_entity
+        render json: { status: 'ERROR', messages: 'Record failed', errors: record.errors }, status: :unprocessable_entity
       end
     else
       render json: { 
         status: 'ERROR', 
         messages: "Current task completion is #{task.completion}%, please set a lower value for 100%", 
-        data: record 
+        record: record 
       }, status: :unprocessable_entity
     end
   end
@@ -43,9 +43,9 @@ class RecordsController < ApplicationController
     record = Record.find(params[:id])
 
     if record.destroy
-      render json: { status: 'SUCCESS', messages: 'Record successfully destroyed', data: record }, status: :ok
+      render json: { status: 'SUCCESS', messages: 'Record successfully destroyed', record: record }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Record delete error', data: record.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Record delete error', errors: record.errors }, status: :unprocessable_entity
     end
   end
 
@@ -53,9 +53,9 @@ class RecordsController < ApplicationController
     record = Record.find(params[:id])
 
     if record.update_attributes(record_params)
-      render json: { status: 'SUCCESS', messages: 'Record successfully updated', data: record }, status: :ok
+      render json: { status: 'SUCCESS', messages: 'Record successfully updated', record: record }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Record update error', data: record.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Record update error', errors: record.errors }, status: :unprocessable_entity
     end
   end
 
