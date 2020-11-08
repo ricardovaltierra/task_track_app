@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create]
   resources :registrations, only: [:create, :destroy]
-  resources :tasks, only: [:index, :show, :create, :destroy, :update]
+
+  delete :destroy, to: "tasks#destroy"
+
+  resources :tasks, only: [:index, :show, :create, :update]
+
   resources :records, only: [:index, :show, :create, :destroy, :update]
 end
