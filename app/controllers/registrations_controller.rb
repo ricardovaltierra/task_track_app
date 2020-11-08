@@ -13,7 +13,7 @@ class RegistrationsController < ApplicationController
         user: user
       }
     else
-      render json: { errors: @user.errors }, status: :unprocessable_entity
+      render json: { errors: @user.errors.to_hash(true) }, status: :unprocessable_entity
     end
   end
 
