@@ -21,12 +21,12 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
+    task = Task.where('user_id': @current_user)
 
-    if task.destroy
-      render json: { status: 'SUCCESS', messages: 'Task deleted', task: task }, status: :ok
+    if task.destroy_all
+      render json: { status: 'SUCCESS', messages: 'Tasks and records deleted', task: task }, status: :ok
     else
-      render json: { status: 'ERROR', messages: 'Task not deleted', errors: task.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', messages: 'Task/Records not deleted', errors: task.errors }, status: :unprocessable_entity
     end
   end
 
