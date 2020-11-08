@@ -13,7 +13,7 @@ class RegistrationsController < ApplicationController
         user: user
       }
     else
-      render json: { status: 'ERROR', messages: 'Account not created', errors: user.errors.messages }, status: :unprocessable_entity
+      render json: { errors: user.errors.messages, message: "message error" }, status: 500
     end
   end
 
