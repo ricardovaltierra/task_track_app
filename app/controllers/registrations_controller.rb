@@ -7,10 +7,10 @@ class RegistrationsController < ApplicationController
     )
 
     if @user.save
-      session[:user_id] = user.id
+      session[:user_id] = @user.id
       render json: { 
         status: :created,
-        user: user
+        user: @user
       }
     else
       render json: { errors: @user.errors.to_hash(true) }, status: :unprocessable_entity
