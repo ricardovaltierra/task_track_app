@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'colorize', :git => 'https://github.com/fazibear/colorize.git', :branch => 'master'
 end
 
 group :development do

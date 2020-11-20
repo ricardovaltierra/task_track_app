@@ -6,6 +6,13 @@ GIT
     faker (2.14.0)
       i18n (>= 1.6, < 2)
 
+GIT
+  remote: https://github.com/fazibear/colorize.git
+  revision: 526654c6d7dfc5483b70184d06b994eba8359514
+  branch: master
+  specs:
+    colorize (0.8.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -213,6 +220,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
+  colorize!
   database_cleaner (~> 1.8, >= 1.8.5)
   factory_bot_rails (~> 6.1)
   faker!
