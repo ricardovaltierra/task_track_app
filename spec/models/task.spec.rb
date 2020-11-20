@@ -45,8 +45,8 @@ RSpec.describe Task, type: :model do
           user_id: @user.id,
           completion: nil
           ))
-  }.to raise_error(ActiveRecord::RecordInvalid,
-  "Validation failed: Completion can't be blank")
+    }.to raise_error(ActiveRecord::RecordInvalid,
+    "Validation failed: Completion can't be blank")
   end
 
   it 'returns error for user\'s id not present' do
